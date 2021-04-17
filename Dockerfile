@@ -10,6 +10,7 @@ ENV NGINX_RTMP_MODULE_VERSION 1.2.1
 RUN apt-get update && \
     apt-get install -y ca-certificates openssl libssl-dev && \
     apt-get install -y build-essential wget git libpcre3-dev zlib1g-dev && \
+    apt-get install -y libnginx-mod-http-perl && \
     rm -rf /var/lib/apt/lists/*
 
 # Download and decompress Nginx
@@ -17,9 +18,6 @@ RUN mkdir -p /tmp/build/nginx && \
     cd /tmp/build/nginx && \
     wget -O ${NGINX_VERSION}.tar.gz https://nginx.org/download/${NGINX_VERSION}.tar.gz && \
     tar -zxf ${NGINX_VERSION}.tar.gz
-
-# Get the nginx perl package
-RUN apt-get install -y libnginx-mod-http-perl
 
 # Download and decompress RTMP module
 RUN mkdir -p /tmp/build/nginx-rtmp-module && \
