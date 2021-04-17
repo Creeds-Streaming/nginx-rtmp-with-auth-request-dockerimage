@@ -9,9 +9,7 @@ ENV NGINX_RTMP_MODULE_VERSION 1.2.1
 # Install dependencies
 RUN apt-get update && \
     apt-get install -y ca-certificates openssl libssl-dev && \
-    apt-get install -y build-essential wget git libpcre3-dev zlib1g-dev && \
-    apt-get install -y libnginx-mod-http-perl && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y build-essential wget git libpcre3-dev zlib1g-dev
 
 # Download and decompress Nginx
 RUN mkdir -p /tmp/build/nginx && \
@@ -52,6 +50,11 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
     make install && \
     mkdir /var/lock/nginx && \
     rm -rf /tmp/build
+
+# Install pearl mod
+RUN apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install nginx-common && \
+    apt-get install -y libnginx-mod-http-perl && \
+    rm -rf /var/lib/apt/lists/*
 
 # Forward logs to Docker
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
