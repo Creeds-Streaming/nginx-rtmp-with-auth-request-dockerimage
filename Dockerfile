@@ -18,6 +18,9 @@ RUN mkdir -p /tmp/build/nginx && \
     wget -O ${NGINX_VERSION}.tar.gz https://nginx.org/download/${NGINX_VERSION}.tar.gz && \
     tar -zxf ${NGINX_VERSION}.tar.gz
 
+# Get the nginx perl package
+RUN apt-get install -y libnginx-mod-http-perl
+
 # Download and decompress RTMP module
 RUN mkdir -p /tmp/build/nginx-rtmp-module && \
     cd /tmp/build/nginx-rtmp-module && \
